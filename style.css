@@ -99,7 +99,7 @@ body {
   background: #28a0d6;
 }
 
-/* Header */
+/* ===== Header ===== */
 #header {
   width: 100%;
   height: 60px;
@@ -132,20 +132,73 @@ body {
   background: #e0e0e0;
 }
 
-#header #read-all-btn {
+/* === แทนปุ่ม read-all-btn ด้วย dropdown === */
+.dropdown {
   position: absolute;
   right: 10px;
-  padding: 6px 12px;
-  font-size: 16px;
-  background: white;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: white;
   color: #28c0e6;
+  padding: 6px 12px;
+  font-size: 18px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  transition: background 0.2s;
 }
 
-#header #read-all-btn:hover {
-  background: #e0e0e0;
+.dropbtn:hover {
+  background-color: #e0e0e0;
+}
+
+/* กล่องเมนู */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 110%;
+  background-color: #fff;
+  min-width: 180px;
+  box-shadow: 0px 8px 16px rgba(0,0,0,0.25);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 999;
+  animation: dropdownFade 0.25s ease forwards;
+}
+
+/* ปุ่มแต่ละอันในเมนู */
+.dropdown-content a {
+  display: block;
+  padding: 12px 16px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #333;
+  transition: background 0.2s, color 0.2s;
+}
+
+.dropdown-content a:hover {
+  background-color: #f0f0f0;
+  color: #000;
+}
+
+/* เวลาเปิด */
+.dropdown.show .dropdown-content {
+  display: block;
+}
+
+/* Animation */
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Center message */
@@ -222,9 +275,9 @@ body {
 
 /* ภาพที่ตัวละครส่ง */
 .bubble img.message-img {
-  width: 150px;       /* ขนาดกำหนดไม่ใหญ่เกิน */
-  height: 150px;      /* ทำเป็นสี่เหลี่ยมจัตุรัส */
-  object-fit: cover;  /* ครอบคลุมเต็มขอบ */
-  border-radius: 12px; /* โค้งนิดๆ ให้สวย */
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
   margin-top: 6px;
 }
