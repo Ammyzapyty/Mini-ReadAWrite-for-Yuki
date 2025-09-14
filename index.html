@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Only Yuki can read</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 style="text-align:center; margin-top:20px;">- Kafhime</h1>
+  <h2 style="text-align:center; margin-top:20px;">Original Fanfiction by ฮป.</h2>
+
+  <div id="chapter-list" class="chapter-list"></div>
+
+  <script>
+    const chapters = [
+      { title: "チャプター1", file: "stories/chapter1.json" },
+      { title: "チャプター2", file: "stories/chapter2.json" }
+    ];
+
+    const listDiv = document.getElementById("chapter-list");
+
+    chapters.forEach(ch => {
+      const btn = document.createElement("button");
+      btn.textContent = ch.title;
+      btn.classList.add("chapter-btn");
+
+      btn.addEventListener("click", () => {
+        localStorage.setItem("selectedChapter", ch.file);
+        window.location.href = "chat.html";
+      });
+
+      listDiv.appendChild(btn);
+    });
+  </script>
+</body>
+</html>
