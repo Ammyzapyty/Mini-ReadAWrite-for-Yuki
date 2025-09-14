@@ -25,7 +25,8 @@ const chatContainer = document.getElementById("chat-container");
 const nextBtn = document.getElementById("next-btn");
 const chapterTitleDiv = document.getElementById("chapter-title");
 const backBtn = document.getElementById("back-btn");
-const readAllBtn = document.getElementById("read-all-btn");
+const readAllBtn = document.getElementById("readAllBtn");
+const restartBtn = document.getElementById("restartBtn");
 
 // -----------------------------
 // รายการ chapters
@@ -127,7 +128,6 @@ function addMessage(msg) {
   bubbleDiv.appendChild(nameDiv);
   bubbleDiv.appendChild(textDiv);
 
-  // ✅ ถ้ามีภาพ ส่งเข้ามา
   if (msg.image) {
     const imgEl = document.createElement("img");
     imgEl.src = msg.image;
@@ -157,7 +157,6 @@ function addMessage(msg) {
 
   if (align === "right") bubbleDiv.classList.add("right-bubble");
 }
-
 
 // -----------------------------
 // ปุ่มถัดไป
@@ -192,6 +191,7 @@ readAllBtn.addEventListener("click", () => {
   if (typingTimeout) clearTimeout(typingTimeout);
   typingTextDiv = null;
 
+  const currentScroll = chatContainer.scrollTop;
   chatContainer.innerHTML = "";
   story.forEach(msg => addMessage({ ...msg, typing: false }));
   currentIndex = story.length;
@@ -206,7 +206,22 @@ readAllBtn.addEventListener("click", () => {
     nextBtn.textContent = "おしまい";
   }
 
-  chatContainer.scrollTop = chatContainer.scrollHeight;
+  chatContainer.scrollTop = currentScroll;
+});
+
+// -----------------------------
+// ปุ่มอ่านตอนนี้ใหม่
+// -----------------------------
+restartBtn.addEventListener("click", () => {
+  if (typingTimeout) clearTimeout(typingTimeout);
+  typingTextDiv = null;
+
+  chatContainer.innerHTML = "";
+  currentIndex = 0;
+  localStorage.setItem(`chapterProgress_${selectedChapter}`, currentIndex);
+
+  if (story.length > 0) addMessage(story[currentIndex]);
+  currentIndex++;
 });
 
 // -----------------------------
@@ -218,3 +233,20 @@ function goNextChapter() {
   localStorage.setItem("selectedChapter", selectedChapter);
   window.location.reload();
 }
+
+// -----------------------------
+// เปิด/ปิด dropdown
+// -----------------------------
+document.addEventListener("DOMContentLoaded", () => {
+  const dropbtn = document.querySelector(".dropbtn");
+  const dropdown = document.querySelector(".dropdown");
+
+  dropbtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    dropdown.classList.toggle("show");
+  });
+
+  window.addEventListener("click", () => {
+    dropdown.classList.remove("show");
+  });
+});
